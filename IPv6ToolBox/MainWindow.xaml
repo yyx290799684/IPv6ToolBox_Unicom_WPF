@@ -101,8 +101,9 @@
             <Image Source="ipv6-zhuanxian.png" Stretch="None"></Image>
         </Grid>
 
-        <Grid Grid.Row="4" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="4" HorizontalAlignment="Right" Orientation="Horizontal">
+            <TextBlock Name="githubTextBlock" Text="GitHub" Margin="5" MouseLeftButtonUp="githubTextBlock_MouseLeftButtonUp"/>
             <TextBlock Name="updateTextBlock" Text="检查更新" Margin="5" MouseLeftButtonUp="updateTextBlock_MouseLeftButtonUp"/>
-        </Grid>
+        </StackPanel>
     </Grid>
 </Window>

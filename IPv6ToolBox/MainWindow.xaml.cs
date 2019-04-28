@@ -196,5 +196,10 @@ namespace IPv6ToolBox
         {
             checkUpdateAsync(1);
         }
+
+        private void githubTextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/yyx290799684/IPv6ToolBox_Unicom_WPF");
+        }
     }
 }
