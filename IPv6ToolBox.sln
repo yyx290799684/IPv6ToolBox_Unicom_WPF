@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPv6ToolBox", "IPv6ToolBox\IPv6ToolBox.csproj", "{D035F628-0A7B-49F9-B7E1-1B0EB2C128D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Update", "Update\Update.csproj", "{C8D6FDD8-19DA-4927-A981-522190095C74}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D035F628-0A7B-49F9-B7E1-1B0EB2C128D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D035F628-0A7B-49F9-B7E1-1B0EB2C128D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D035F628-0A7B-49F9-B7E1-1B0EB2C128D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D035F628-0A7B-49F9-B7E1-1B0EB2C128D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8D6FDD8-19DA-4927-A981-522190095C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8D6FDD8-19DA-4927-A981-522190095C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8D6FDD8-19DA-4927-A981-522190095C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8D6FDD8-19DA-4927-A981-522190095C74}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6B4A530-AD89-40BD-B9FA-E8AEEB30634A}
+	EndGlobalSection
+EndGlobal

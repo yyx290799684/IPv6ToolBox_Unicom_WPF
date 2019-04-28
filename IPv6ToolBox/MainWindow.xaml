@@ -1,0 +1,108 @@
+﻿<Window x:Name="window" x:Class="IPv6ToolBox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IPv6ToolBox"
+        mc:Ignorable="d"
+        Title="IPv6 Tool Box" Height="500" MinHeight="500" Width="710" MinWidth="710">
+    <Window.Resources>
+        <ControlTemplate x:Key="ScrollViewerControlTemplate1" TargetType="{x:Type ScrollViewer}">
+            <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Rectangle x:Name="Corner" Grid.Column="1" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1"/>
+                <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Margin="{TemplateBinding Padding}" Grid.Row="0"/>
+                <ScrollBar x:Name="PART_VerticalScrollBar" Margin="1,0,0,0" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}"  MinWidth="5" Width="5"/>
+                <ScrollBar x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"/>
+            </Grid>
+        </ControlTemplate>
+    </Window.Resources>
+    <Grid Name="grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="IPv6业务地址" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBox Name="ipv6YWTextBox" VerticalAlignment="Center" Grid.Column="1"></TextBox>
+        </Grid>
+
+
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="用户设备数量" VerticalAlignment="Center"/>
+            <TextBox Name="customDevicesCountTextBox" VerticalAlignment="Center"  Margin="5,0" Text="1" Width="25" Grid.Column="1"></TextBox>
+
+            <TextBlock Margin="5" Text="速率" Grid.Column="2"/>
+            <ComboBox Name="SpeedComboBox" Width="60" SelectedIndex="1" Margin="5,0" Grid.Column="3" >
+                <ComboBoxItem>100G</ComboBoxItem>
+                <ComboBoxItem>10G</ComboBoxItem>
+                <ComboBoxItem>1G</ComboBoxItem>
+                <ComboBoxItem>100M</ComboBoxItem>
+                <ComboBoxItem>40G</ComboBoxItem>
+                <ComboBoxItem>2.5G</ComboBoxItem>
+                <ComboBoxItem>115M</ComboBoxItem>
+            </ComboBox>
+
+            <TextBlock Text="用户上联方向数量" VerticalAlignment="Center" Grid.Column="4"/>
+
+            <ComboBox Name="customLineCountComboBox" Width="40" SelectedIndex="1" Margin="5,0" Grid.Column="5" >
+                <ComboBoxItem>1</ComboBoxItem>
+                <ComboBoxItem>2</ComboBoxItem>
+            </ComboBox>
+
+            <Button Name="buildButton" Content="生成" Grid.Column="6"  Click="buildButton_Click"></Button>
+        </Grid>
+
+        <Line X1="0" X2="{Binding Width, ElementName=window}" VerticalAlignment="Top" Stretch="Fill" Stroke="#333" Grid.Row="2"/>
+        <ScrollViewer Grid.Row="2" Margin="5" VerticalScrollBarVisibility="Auto" Template="{DynamicResource ScrollViewerControlTemplate1}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="地址信息" Grid.Row="0" Foreground="Red"/>
+                <TextBox Name="OutInfoTextBox" Grid.Row="1" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
+
+                <TextBlock Text="LOOPBACK地址" Grid.Row="2"  Foreground="Red"/>
+                <TextBox Name="OutLoopbackTextBox" Grid.Row="3" IsReadOnly="True"></TextBox>
+
+                <TextBlock Text="互联地址地址(联通用0102，用户用0103)" Grid.Row="4"  Foreground="Red"/>
+                <TextBox Name="OutNetAddressTextBox"  Grid.Row="5" IsReadOnly="True"></TextBox>
+            </Grid>
+        </ScrollViewer>
+        <Grid Grid.Row="3"  >
+            <Image Source="ipv6-zhuanxian.png" Stretch="None"></Image>
+        </Grid>
+
+        <Grid Grid.Row="4" HorizontalAlignment="Right">
+            <TextBlock Name="updateTextBlock" Text="检查更新" Margin="5" MouseLeftButtonUp="updateTextBlock_MouseLeftButtonUp"/>
+        </Grid>
+    </Grid>
+</Window>
