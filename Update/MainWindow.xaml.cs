@@ -31,20 +31,29 @@ namespace Update
 
         }
 
-        private async void checkUpdate()
+        public MainWindow(StartupEventArgs e)
         {
+            InitializeComponent();
+            checkUpdate(e.Args[0].ToString());
+        }
+
+        private async void checkUpdate(string name = "IPv6ToolBox.exe")
+        {
+            //MessageBox.Show(name);
+
+
             var update = await NetWork.getHttpWebRequest("http://60.12.230.82:10086/IPv6/update.txt", PostORGet: 1);
             string dir = System.IO.Directory.GetCurrentDirectory();  //程序所在文件夹路径
             string file = System.IO.Path.Combine(dir, "IPv6ToolBox.exe");  //下载后zip文件的完整路径
 
-            string f = System.IO.Directory.GetCurrentDirectory() + "/IPv6ToolBox.exe";
+            string f = System.IO.Directory.GetCurrentDirectory() + "/" + name;
             if (File.Exists(f))
             {
                 File.Copy(f, System.IO.Directory.GetCurrentDirectory() + "/IPv6ToolBox.bak");
             }
             try
             {
-                string appname = "IPv6ToolBox";  //A名字，不要路径，不要.exe
+                string appname = name.Replace(".exe", "");  //A名字，不要路径，不要.exe
                 Process[] processes = Process.GetProcessesByName(appname);
                 foreach (var p in processes)
                     p.Kill();
@@ -53,6 +62,10 @@ namespace Update
                 WebClient client = new WebClient();
                 client.DownloadFile("http://60.12.230.82:10086/IPv6/bin/IPv6ToolBox_" + update.Substring(1, 4) + ".exe", file);
                 File.Delete(System.IO.Directory.GetCurrentDirectory() + "/IPv6ToolBox.bak");
+                if (name != "IPv6ToolBox.exe")
+                {
+                    File.Delete(f);
+                }
             }
             catch (Exception e)
             {

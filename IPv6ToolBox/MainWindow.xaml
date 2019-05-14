@@ -94,7 +94,14 @@
                 <TextBox Name="OutLoopbackTextBox" Grid.Row="3" IsReadOnly="True"></TextBox>
 
                 <TextBlock Text="互联地址地址(联通用0102，用户用0103)" Grid.Row="4"  Foreground="Red"/>
-                <TextBox Name="OutNetAddressTextBox"  Grid.Row="5" IsReadOnly="True"></TextBox>
+                <!--<TextBox Name="OutNetAddressTextBox"  Grid.Row="5" IsReadOnly="True"></TextBox>-->
+                <RichTextBox Name="OutNetAddressRichTextBox" Grid.Row="5" IsReadOnly="True">
+                    <RichTextBox.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0"/>
+                        </Style>
+                    </RichTextBox.Resources>
+                </RichTextBox>
             </Grid>
         </ScrollViewer>
         <Grid Grid.Row="3"  >

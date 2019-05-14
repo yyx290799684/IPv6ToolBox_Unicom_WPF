@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -76,7 +77,9 @@ namespace IPv6ToolBox
         private void buildButton_Click(object sender, RoutedEventArgs e)
         {
             OutLoopbackTextBox.Text = string.Empty;
-            OutNetAddressTextBox.Text = string.Empty;
+            //OutNetAddressTextBox.Text = string.Empty;
+            OutNetAddressRichTextBox.Document.Blocks.Clear();
+
             OutInfoTextBox.Text = string.Empty;
 
 
@@ -109,7 +112,7 @@ namespace IPv6ToolBox
                 ipv6LoopbackList = ipv6CalculateTools.GetIPv6LoopBack();
                 ipv6InternetAddressList = ipv6CalculateTools.GetIPv6InternetAddress();
                 ipv6Info = ipv6CalculateTools.GetIPv6Info();
-                ShowAddress();
+                ShowAddressAsync();
             }
             catch (Exception)
             {
@@ -131,7 +134,7 @@ namespace IPv6ToolBox
             }
         }
 
-        private void ShowAddress()
+        private async Task ShowAddressAsync()
         {
             StringBuilder loopbackStringBuilder = new StringBuilder();
             for (int i = 0; i < ipv6LoopbackList.Count; i++)
@@ -159,7 +162,61 @@ namespace IPv6ToolBox
                     internetStringBuilder.AppendLine("第" + (i + 1) + "个方向互联地址：联通->" + Utils.IPv62ShortAddress(ipv6InternetAddressList[i][0]) + "  用户->" + Utils.IPv62ShortAddress(ipv6InternetAddressList[i][1]));
                 }
             }
-            OutNetAddressTextBox.Text = internetStringBuilder.ToString();
+            OutNetAddressRichTextBox.AppendText(internetStringBuilder.ToString());
+            await Task.Delay(1);
+            TextRange textRange = new TextRange(OutNetAddressRichTextBox.Document.ContentStart, OutNetAddressRichTextBox.Document.ContentEnd);
+            textRange.ClearAllProperties();
+            TextPointer position = OutNetAddressRichTextBox.Document.ContentStart;
+
+            while (position != null)
+            {
+                //向前搜索,需要内容为Text
+                Debug.WriteLine(position.GetPointerContext(LogicalDirection.Forward));
+                if (position.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+                {
+                    //拿出Run的Text
+                    string text = position.GetTextInRun(LogicalDirection.Forward);
+                    //可能包含多个keyword,做遍历查找
+
+                    int temp = 0;
+
+                    List<string> useKeywords = new List<string>(new string[] {
+                        "102/127",
+                        "103/127",
+                    });
+
+                    //Debug.WriteLine("text -> " + text + " ->从" + temp + "开始搜索 -> " + "搜索 -> " + useKeywords[i] + " -> index -> " + index);
+                    List<TextRange> hintTextRangeList = new List<TextRange>();
+                    for (int i = 0; i < useKeywords.Count; i++)
+                    {
+                        int index = -1;
+                        index = text.IndexOf(useKeywords[i], temp);
+
+                        if (index != -1)
+                        {
+                            TextPointer start = position.GetPositionAtOffset(index);
+                            TextPointer end = start.GetPositionAtOffset(1);
+                            TextRange range = new TextRange(start, end);
+                            hintTextRangeList.Add(range);
+                        }
+                    }
+                    foreach (var item in hintTextRangeList)
+                    {
+                        item.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Red));
+                    }
+                }
+                try
+                {
+                    position = position.GetNextContextPosition(LogicalDirection.Forward);
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+
+            }
+
+            //OutNetAddressTextBox.Text = internetStringBuilder.ToString();
             OutInfoTextBox.Text = ipv6Info;
         }
 

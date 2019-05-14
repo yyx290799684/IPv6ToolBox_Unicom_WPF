@@ -59,8 +59,8 @@ namespace IPv6ToolBox
 
                 WebClient client = new WebClient();
                 client.DownloadFile("http://60.12.230.82:10086/IPv6/Update.exe", file);
-
-                System.Diagnostics.Process.Start(file);
+                Debug.WriteLine(Process.GetCurrentProcess().MainModule.FileName.Split('\\').Last());
+                System.Diagnostics.Process.Start(file, Process.GetCurrentProcess().MainModule.FileName.Split('\\').Last());
 
             }
             catch (Exception)
