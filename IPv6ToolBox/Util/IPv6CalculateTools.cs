@@ -36,10 +36,15 @@ namespace IPv6ToolBox.Util
             cityIndex = ipv6StringList[2].First().ToString();
             engineRoomIndex = ipv6StringList[2].Substring(1, 1).ToString();
 
-            if (int.Parse(ipv6net) >= 56)
+            if (int.Parse(ipv6net) >= 60)
             {
                 markTagIndex = ipv6StringList[2].Substring(2, 2).ToString();
-                customIndex = ipv6StringList[3].Replace("0", "");
+                customIndex = ipv6StringList[3].TrimStart('0');
+            }
+            else if (int.Parse(ipv6net) >= 56)
+            {
+                markTagIndex = ipv6StringList[2].Substring(2, 2).ToString();
+                customIndex = ipv6StringList[3].Substring(0, 2).TrimStart('0');
             }
             else if (int.Parse(ipv6net) >= 48)
             {
@@ -133,6 +138,11 @@ namespace IPv6ToolBox.Util
             string info = string.Empty;
             try
             {
+                if (string.IsNullOrEmpty(customIndex))
+                {
+                    info = "Error:用户序号从1开始，请确认";
+                    return info;
+                }
                 if (Convert.ToInt32(ipIndex, 16) <= 4)
                 {
                     if (cityIndex == "c" || cityIndex == "d")
