@@ -37,7 +37,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="IPv6业务地址" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBlock Name="ipv6YWTextBlock" Text="IPv6业务地址" VerticalAlignment="Center" Margin="0,0,5,0" MouseLeftButtonUp="ipv6YWTextBlock_MouseLeftButtonUp"/>
             <TextBox Name="ipv6YWTextBox" VerticalAlignment="Center" Grid.Column="1"></TextBox>
         </Grid>
 

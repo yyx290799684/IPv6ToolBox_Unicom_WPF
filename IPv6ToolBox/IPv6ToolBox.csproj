@@ -57,13 +57,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="IPv6CalculateWindow.xaml.cs">
+      <DependentUpon>IPv6CalculateWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NetWork.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="UpdateWindow.xaml.cs">
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util\AddressResource.cs" />
     <Compile Include="Util\IPv6CalculateTools.cs" />
     <Compile Include="Util\Utils.cs" />
+    <Page Include="IPv6CalculateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

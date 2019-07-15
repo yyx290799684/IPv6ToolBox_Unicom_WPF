@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,20 +37,42 @@ namespace IPv6ToolBox.Util
             cityIndex = ipv6StringList[2].First().ToString();
             engineRoomIndex = ipv6StringList[2].Substring(1, 1).ToString();
 
-            if (int.Parse(ipv6net) >= 60)
+            if (int.Parse(ipv6net) >= 64)
             {
                 markTagIndex = ipv6StringList[2].Substring(2, 2).ToString();
                 customIndex = ipv6StringList[3].TrimStart('0');
+            }
+            else if (int.Parse(ipv6net) >= 60)
+            {
+                markTagIndex = ipv6StringList[2].Substring(2, 2).ToString();
+                customIndex = ipv6StringList[3].Substring(0, 3).TrimStart('0');
             }
             else if (int.Parse(ipv6net) >= 56)
             {
                 markTagIndex = ipv6StringList[2].Substring(2, 2).ToString();
                 customIndex = ipv6StringList[3].Substring(0, 2).TrimStart('0');
+                //if (ipv6StringList[2].Substring(3, 1).ToString().ToLower() == "d")
+                //{
+                //    customIndex = Convert.ToString(Int32.Parse(customIndex, System.Globalization.NumberStyles.HexNumber) + 256, 16);
+                //}
+                Debug.WriteLine(Int32.Parse(markTagIndex, System.Globalization.NumberStyles.HexNumber));
+                customIndex = Convert.ToString(256 * (Int32.Parse(markTagIndex, System.Globalization.NumberStyles.HexNumber) - 252) + Int32.Parse(customIndex, System.Globalization.NumberStyles.HexNumber), 16);
+
+            }
+            else if (int.Parse(ipv6net) >= 52)
+            {
+                markTagIndex = ipv6StringList[2].Substring(2, 2).ToString();
+                customIndex = ipv6StringList[3].Substring(0, 1).TrimStart('0');
+
+                customIndex = Convert.ToString(16 * (Int32.Parse(markTagIndex, System.Globalization.NumberStyles.HexNumber) - 248) + Int32.Parse(customIndex, System.Globalization.NumberStyles.HexNumber), 16);
             }
             else if (int.Parse(ipv6net) >= 48)
             {
                 markTagIndex = ipv6StringList[2].Substring(2, 1).ToString() + "0";
                 customIndex = ipv6StringList[2].Substring(3, 1).ToString();
+
+                string customIndex1 = ipv6StringList[2].Substring(2, 1).ToString();
+                customIndex = Convert.ToString(8 * (Int32.Parse(customIndex1, System.Globalization.NumberStyles.HexNumber) - 8) + Int32.Parse(customIndex, System.Globalization.NumberStyles.HexNumber), 16);
             }
             else if (int.Parse(ipv6net) >= 44)
             {

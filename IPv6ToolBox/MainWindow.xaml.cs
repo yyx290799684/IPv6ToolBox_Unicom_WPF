@@ -241,6 +241,11 @@ namespace IPv6ToolBox
                 OutInfoTextBox.Text = "掩码长度非法";
                 return false;
             }
+            if (ipv6YW.Length < 4)
+            {
+                OutInfoTextBox.Text = "该地址非浙江联通IPv6地址段";
+                return false;
+            }
             if (ipv6YW.Substring(0, 4) != "2408")
             {
                 OutInfoTextBox.Text = "该地址非浙江联通IPv6地址段";
@@ -257,6 +262,22 @@ namespace IPv6ToolBox
         private void githubTextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/yyx290799684/IPv6ToolBox_Unicom_WPF");
+        }
+
+        private void ipv6YWTextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            string ipv6 = string.Empty;
+            IPv6CalculateWindow ipv6CalculateWindow = new IPv6CalculateWindow(ipv6);
+            ipv6CalculateWindow.ShowInTaskbar = false;
+            ipv6CalculateWindow.Owner = this;
+            if (ipv6CalculateWindow.ShowDialog() == true)
+            {
+                Debug.WriteLine(ipv6CalculateWindow.Ipv6);
+                ipv6YWTextBox.Text = ipv6CalculateWindow.Ipv6;
+            }
+
+
+
         }
     }
 }
