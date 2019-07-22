@@ -27,7 +27,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel  Grid.Column="0" Orientation="Horizontal"  VerticalAlignment="Center">
-                    <RadioButton Name="IDCRadioButton" Content="IDC" GroupName="typeRadioButton" IsChecked="True" Click="radioButton_Click"/>
+                    <RadioButton Name="IDCRadioButton" Content="IDC" GroupName="typeRadioButton" Click="radioButton_Click"/>
                     <RadioButton Name="ZXRadioButton" Content="专线" GroupName="typeRadioButton" Click="radioButton_Click"/>
                 </StackPanel>
 

@@ -62,6 +62,16 @@ namespace IPv6ToolBox
             ZXAddressPrefixComboBox.DisplayMemberPath = "Key";
             ZXAddressPrefixComboBox.SelectedIndex = 0;
 
+            IDCRadioButton.IsChecked = Properties.Settings.Default.IDCorZX == 0 ? true : false;
+            ZXRadioButton.IsChecked = Properties.Settings.Default.IDCorZX == 0 ? false : true;
+            if (Properties.Settings.Default.IDCorZX == 0)
+            {
+                Change2IDC();
+            }
+            else
+            {
+                Change2ZX();
+            }
         }
 
         private void cityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -93,10 +103,11 @@ namespace IPv6ToolBox
                 }
 
             }
-            else
+            else if ((bool)ZXRadioButton.IsChecked)
             {
                 //专线
                 Properties.Settings.Default.ZXIPv6CalculateCityComboBoxSelectedIndex = (sender as ComboBox).SelectedIndex;
+
                 ZXQXAddressPrefixComboBox.ItemsSource = AddressResource.zxcityCodeDictionary[Convert.ToString((sender as ComboBox).SelectedIndex, 16).ToLower()];
                 ZXQXAddressPrefixComboBox.SelectedValue = "Key";
                 ZXQXAddressPrefixComboBox.DisplayMemberPath = "Value";
@@ -115,25 +126,39 @@ namespace IPv6ToolBox
             var radioButton = sender as RadioButton;
             if (radioButton.Content.ToString() == "IDC")
             {
-                cityComboBox.ItemsSource = AddressResource.city2cityIndexDictionary;
-                cityComboBox.SelectedValue = "Value";
-                cityComboBox.DisplayMemberPath = "Key";
-                cityComboBox.SelectedIndex = Properties.Settings.Default.IDCIPv6CalculateCityComboBoxSelectedIndex;
-
-                IDCGrid.Visibility = Visibility.Visible;
-                ZXGrid.Visibility = Visibility.Collapsed;
+                Change2IDC();
 
             }
-            else
+            else if (radioButton.Content.ToString() == "专线")
             {
-                cityComboBox.ItemsSource = AddressResource.zxcity2cityIndexDictionary;
-                cityComboBox.SelectedValue = "Value";
-                cityComboBox.DisplayMemberPath = "Key";
-                cityComboBox.SelectedIndex = Properties.Settings.Default.ZXIPv6CalculateCityComboBoxSelectedIndex;
-
-                IDCGrid.Visibility = Visibility.Collapsed;
-                ZXGrid.Visibility = Visibility.Visible;
+                Change2ZX();
             }
+            Properties.Settings.Default.Save();
+
+        }
+
+        private void Change2IDC()
+        {
+            Properties.Settings.Default.IDCorZX = 0;
+            cityComboBox.ItemsSource = AddressResource.city2cityIndexDictionary;
+            cityComboBox.SelectedValue = "Value";
+            cityComboBox.DisplayMemberPath = "Key";
+            cityComboBox.SelectedIndex = Properties.Settings.Default.IDCIPv6CalculateCityComboBoxSelectedIndex;
+
+            IDCGrid.Visibility = Visibility.Visible;
+            ZXGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void Change2ZX()
+        {
+            Properties.Settings.Default.IDCorZX = 1;
+            cityComboBox.ItemsSource = AddressResource.zxcity2cityIndexDictionary;
+            cityComboBox.SelectedValue = "Value";
+            cityComboBox.DisplayMemberPath = "Key";
+            cityComboBox.SelectedIndex = Properties.Settings.Default.ZXIPv6CalculateCityComboBoxSelectedIndex;
+
+            IDCGrid.Visibility = Visibility.Collapsed;
+            ZXGrid.Visibility = Visibility.Visible;
         }
 
         private void buildButton_Click(object sender, RoutedEventArgs e)
@@ -159,7 +184,16 @@ namespace IPv6ToolBox
                 }
                 else
                 {
-                    IDCNum = IDCNumTextBox.Text;
+                    try
+                    {
+                        IDCNum = Int32.Parse(IDCNumTextBox.Text, System.Globalization.NumberStyles.HexNumber).ToString();
+                        IDCNum = IDCNumTextBox.Text;
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("信息输入有误，请检查...");
+                        return;
+                    }
                 }
                 Debug.WriteLine("机房编号:" + IDCNum);
                 qxorIDCNum = cityIndex + IDCNum;
@@ -190,6 +224,7 @@ namespace IPv6ToolBox
             Ipv6 = Utils.IPv62ShortAddress(Utils.IPv62FullAddress(Ipv6));
             Debug.WriteLine(Ipv6);
             AddressTextBlock.Text = Ipv6;
+
         }
 
         private string GetMN(string customNum, int pre)

@@ -46,5 +46,17 @@ namespace IPv6ToolBox.Properties {
                 this["ZXIPv6CalculateCityComboBoxSelectedIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int IDCorZX {
+            get {
+                return ((int)(this["IDCorZX"]));
+            }
+            set {
+                this["IDCorZX"] = value;
+            }
+        }
     }
 }
