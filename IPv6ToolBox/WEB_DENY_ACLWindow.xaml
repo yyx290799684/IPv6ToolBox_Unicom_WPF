@@ -1,0 +1,34 @@
+﻿<Window x:Class="IPv6ToolBox.WEB_DENY_ACLWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IPv6ToolBox"
+        mc:Ignorable="d"
+        Title="WEB_DENY_ACLWindow" Height="450" Width="800">
+    <Grid Name="grid" Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="起始序号" VerticalAlignment="Center"/>
+            <TextBox Name="indexTextBox" VerticalAlignment="Center"  Margin="5,0" Width="50" ></TextBox>
+            <RadioButton Name="ipv4RadioButton" Content="IPv4" VerticalAlignment="Center" IsChecked="True"/>
+            <RadioButton Name="ipv6RadioButton" Content="IPv6" VerticalAlignment="Center"/>
+            <Button Name="buildButton" Margin="5,0" Width="50" Content="生成" Click="buildButton_Click"></Button>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Name="ipTextBox" AcceptsReturn="True"></TextBox>
+            <TextBox Name="retTextBox"  AcceptsReturn="True" Grid.Column="1" ></TextBox>
+
+
+        </Grid>
+    </Grid>
+</Window>

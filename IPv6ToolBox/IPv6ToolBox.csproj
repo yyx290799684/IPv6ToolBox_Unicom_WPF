@@ -68,6 +68,9 @@
     <Compile Include="Util\AddressResource.cs" />
     <Compile Include="Util\IPv6CalculateTools.cs" />
     <Compile Include="Util\Utils.cs" />
+    <Compile Include="WEB_DENY_ACLWindow.xaml.cs">
+      <DependentUpon>WEB_DENY_ACLWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="IPv6CalculateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -85,6 +88,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UpdateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WEB_DENY_ACLWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

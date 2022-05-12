@@ -186,8 +186,21 @@ namespace IPv6ToolBox
                 {
                     try
                     {
-                        IDCNum = Int32.Parse(IDCNumTextBox.Text, System.Globalization.NumberStyles.HexNumber).ToString();
                         IDCNum = IDCNumTextBox.Text;
+                        if (IDCNum.Length > 1)
+                        {
+                            MessageBox.Show("你咋那么多机房嘞...好费电啊...机房编号1-f");
+                            return;
+                        }
+                        else
+                        {
+                            var TxdBuf = (new ASCIIEncoding()).GetBytes(IDCNum)[0];
+                            if (!((TxdBuf >= 49 && TxdBuf <= 57) || (TxdBuf >= 65 && TxdBuf <= 70) || (TxdBuf >= 97 && TxdBuf <= 102)))
+                            {
+                                MessageBox.Show("机房编号1-f");
+                                return;
+                            }
+                        }
                     }
                     catch (Exception)
                     {
@@ -201,7 +214,7 @@ namespace IPv6ToolBox
             else
             {
                 //专线
-                AddressPrx = AddressResource.ZXAddressPrefixDictionary.Keys.ToArray()[IDCAddressPrefixComboBox.SelectedIndex].Substring(0, 10);
+                AddressPrx = AddressResource.ZXAddressPrefixDictionary.Keys.ToArray()[ZXAddressPrefixComboBox.SelectedIndex].Substring(0, 10);
 
 
                 string cityIndex = Convert.ToString(cityComboBox.SelectedIndex, 16).ToLower();
